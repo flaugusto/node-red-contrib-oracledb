@@ -25,6 +25,10 @@
                 <label for="node-config-input-reconnecttimeout" style="width: auto"><i class="fa fa-clock-o"></i> Reconnect interval (ms)</label>
                 <input type="text" id="node-config-input-reconnecttimeout" style="width:60px">
             </div>
+            <div class="form-row">
+                <label for="node-config-input-queuedMaxLength" style="width: auto"><i class="fa fa-clock-o"></i> Queued Max Length </label>
+                <input type="text" id="node-config-input-queuedMaxLength" style="width:60px">
+            </div>
         </div>
         <div id="oracle-server-tab-security" style="display:none">
             <div class="form-row">
@@ -123,6 +127,7 @@ RED.nodes.registerType("oracle-server", {
         port: { value: 1521, validate: RED.validators.number() },
         reconnect: { value: true },
         reconnecttimeout: { value: 5000, validate: RED.validators.number() },
+        queuedMaxLength: { value: 250, validate: RED.validators.number() },
         db: { value: "orcl" },
     },
     credentials: {

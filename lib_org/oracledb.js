@@ -171,7 +171,7 @@ module.exports = function(RED) {
       } else {
         node.insertQueue.push({
           requestingNode: requestingNode,
-          quert: query,
+          query: query,
           values: values
         });
       }

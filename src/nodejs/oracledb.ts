@@ -87,6 +87,7 @@ module.exports = function (RED) {
       }
       var resultAction = msg.resultAction || node.resultAction;
       var resultSetLimit = parseInt(msg.resultSetLimit || node.resultLimit, 10);
+      node.oldPayload = msg.payload;
       node.server.query(node, query, values, resultAction, resultSetLimit);
     });
     //};
@@ -184,7 +185,8 @@ module.exports = function (RED) {
       // console.log("values: " + values);
       // console.log("resultAction: " + resultAction);
       // console.log("resultSetLimit: " + resultSetLimit);
-
+      console.log("BIZIN");
+      requestingNode.log("BIZIN");
       requestingNode.log("Oracle query start execution");
       if (node.connection) {
         delete node.reconnecting;
@@ -217,8 +219,10 @@ module.exports = function (RED) {
               switch (resultAction) {
                 case "single":
                   requestingNode.send({
-                    payload: result.rows
+                    payload: result.rows,
+		    oldPayload: node.oldPayload
                   });
+		  requestingNode.log("BIZIN" + node.oldPayload);
                   requestingNode.log("Oracle query single result rows sent");
                   break;
                 case "multi":
@@ -257,8 +261,10 @@ module.exports = function (RED) {
           });
         } else {
           requestingNode.send({
-            payload: rows
+            payload: rows,
+	    oldPayload: node.oldPayload
           });
+          requestingNode.log("BIZIN" + node.oldPayload);
           requestingNode.log("Oracle query resultSet rows sent");
           node.fetchRowsFromResultSet(requestingNode, resultSet, maxRows);
         }
